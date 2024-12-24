@@ -2,6 +2,7 @@ package com.ditto.notesapi.controller;
 
 import com.ditto.notesapi.model.Note;
 import com.ditto.notesapi.service.NoteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class NoteController {
      * @return The created note.
      */
     @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody Note note) {
+    public ResponseEntity<Note> createNote(@Valid @RequestBody Note note) {
         Note createdNote = noteService.createNote(note);
         return ResponseEntity.ok(createdNote);
     }

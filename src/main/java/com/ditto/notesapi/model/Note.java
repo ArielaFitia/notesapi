@@ -1,22 +1,22 @@
 package com.ditto.notesapi.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Note {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Title is mandatory")
+    @Size(max = 100, message = "Title cannot exceed 100 characters")
     private String title;
 
-    @Column(length = 2000)
+    @NotBlank(message = "Content is mandatory")
     private String content;
 
     private LocalDateTime timestamp;
