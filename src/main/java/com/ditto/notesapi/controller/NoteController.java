@@ -33,11 +33,13 @@ public class NoteController {
         return noteService.getNoteById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping
     public ResponseEntity<Note> createNote(@RequestBody Note note) {
         Note createdNote = noteService.createNote(note);
         return ResponseEntity.ok(createdNote);
     }
 
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNoteById(@PathVariable Long id) {
         if(noteService.getNoteById(id).isPresent()) {
             noteService.deleteNoteById(id);
