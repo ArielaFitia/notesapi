@@ -39,4 +39,16 @@ public class NoteServiceimpl implements NoteService {
     public void deleteNoteById(Long id) {
         noteRepository.deleteById(id);
     }
+
+    @Override
+    public Note updateNote(Long id, Note note) {
+        Optional<Note> existingNote = noteRepository.findById(id);
+        if (existingNote.isPresent()) {
+            Note noteToUpdate = existingNote.get();
+            noteToUpdate.setTitle(note.getTitle());
+            noteToUpdate.setContent(note.getContent());
+            return noteRepository.save(noteToUpdate);
+        }
+        throw new RuntimeException("Note not found");
+    }
 }

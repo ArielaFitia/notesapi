@@ -4,6 +4,7 @@ import com.ditto.notesapi.model.Note;
 import com.ditto.notesapi.service.NoteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +58,7 @@ public class NoteController {
     /**
      * DELETE /notes/{id} - Delete a note by ID.
      * @param id ID of the note to delete.
-     * @return 204 No Content if successful, or 404 Not Found id the note doesn't exist.
+     * @return 204 No Content if successful, or 404 Not Found if the note doesn't exist.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNoteById(@PathVariable Long id) {
@@ -66,5 +67,21 @@ public class NoteController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * PUT /notes/{id}
+     * @param id ID of the note update.
+     * @param note updated note.
+     * @return The updated note, or 404 Not Found if the note doesn't exist.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Note> updateNote(@PathVariable Long id, @Valid @RequestBody Note note) {
+        try {
+            Note updatedNote = noteService.updateNote(id, note);
+            return ResponseEntity.ok(updatedNote);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }
