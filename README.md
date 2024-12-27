@@ -23,7 +23,7 @@ Follow these steps to run the project on your machine:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/notesapi.git
+   git clone https://github.com/ArielaFitia/notesapi.git
    cd notesapi
    
 2. Build the project:
